@@ -1,0 +1,49 @@
+{
+  "questions": [
+    {
+      "id": "ns_001",
+      "type": "single",
+      "topic": "number_systems",
+      "difficulty": 1,
+      "text": "Переведите число 1011₂ в десятичную систему счисления.",
+      "options": [
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "correct_answer": "11",
+      "explanation": "1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8 + 0 + 2 + 1 = 11"
+    },
+    {
+      "id": "logic_001",
+      "type": "single",
+      "topic": "logic",
+      "difficulty": 2,
+      "text": "Какое логическое выражение эквивалентно ¬(A ∧ B)?",
+      "options": [
+        "¬A ∧ ¬B",
+        "¬A ∨ ¬B",
+        "A ∨ B",
+        "A ∧ ¬B"
+      ],
+      "correct_answer": "¬A ∨ ¬B",
+      "explanation": "По закону де Моргана: ¬(A ∧ B) = ¬A ∨ ¬B"
+    },
+    {
+      "id": "text_001",
+      "type": "single",
+      "topic": "text_encoding",
+      "difficulty": 1,
+      "text": "Сколько байт занимает слово 'КОД' в кодировке ASCII?",
+      "options": [
+        "3",
+        "6",
+        "12",
+        "24"
+      ],
+      "correct_answer": "3",
+      "explanation": "В ASCII 1 символ = 1 байт. Слово из 3 букв = 3 байта."
+    }
+  ]
+}
