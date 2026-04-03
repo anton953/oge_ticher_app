@@ -2,6 +2,7 @@ import sys
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
 
+from ui.left_tab.tab_choose import TabChoose
 
 
 class LeftTab(QTabWidget):
@@ -17,30 +18,24 @@ class LeftTab(QTabWidget):
 
 
         # Создаем вкладки
-        self.addTab(self.create_home_tab(), "Главная")
-        self.addTab(self.create_settings_tab(), "Настройки")
-        self.addTab(self.create_about_tab(), "О программе")
+        self.addTab(self.create_learning_tab(), "Обучение")
+        self.addTab(self.create_trening_tab(), "Тренеровка")
+        # self.addTab(self.create_about_tab(), "")
 
 
 
-    def create_home_tab(self):
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Добро пожаловать!"))
-        layout.addWidget(QPushButton("Начать работу"))
+    def create_learning_tab(self):
+        widget = TabChoose('learning')
         return widget
     
-    def create_settings_tab(self):
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Настройки приложения"))
+        
+
+
+    def create_trening_tab(self):
+        widget = TabChoose('trening')
         return widget
     
-    def create_about_tab(self):
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Версия 1.0"))
-        return widget
+    
         
 
         
