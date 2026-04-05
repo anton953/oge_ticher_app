@@ -5,6 +5,8 @@ from PySide6.QtCore import Qt
 # from ui.left_tab.learning import TabChoose
 # from ui.main_tab.list_menu import ListMenu
 
+from ui.left_tab.task_vbox import TaskVBox
+
 
 class TabChoose(QTabWidget):
     def __init__(self, type_task):
@@ -16,21 +18,47 @@ class TabChoose(QTabWidget):
 
         # Создаем вкладки
         for i in range(1, 11):
-            self.addTab(self.create_home_tab(i), f'{i}')
+            self.addTab(self.create_task_tab(i), f'{i}')
             
 
 
 
-    def create_home_tab(self, n):
+    def create_task_tab(self, task_id):
         widget = QWidget()
-        layout = QVBoxLayout(widget)
-        
-        # TODO добавить обработчик заданий (пока эмитация)
-        layout.addWidget(QLabel(f'{self.type_task}: tasks{n}'))
-        for i in range(10): #TODO проблема с прокруткой
-            layout.addWidget(QLabel(f'task {i}'))
+        main_layout = TaskVBox(widget, task_id)
+
+
+
 
         return widget
+
+
+
+
+
+
+
+        # widget = QWidget()
+        # main_layout = QVBoxLayout(widget)
+
+        # scroll = QScrollArea()
+        # scroll.setWidgetResizable(True)
+
+
+        # container = QWidget()
+        # container_layout = TaskVBox(container, task_id)
+
+
+        
+         # # main_layout.addWidget(QLabel(f'{self.type_task}: tasks{task_id}'))
+        # # for i in range(40):
+        # #     container_layout.addWidget(QLabel(f'task {i}'))
+
+
+        # scroll.setWidget(container)
+        # main_layout.addWidget(scroll)
+
+        # return widget
     
 
         
