@@ -55,26 +55,30 @@ class TaskVBox(QVBoxLayout):
             # )
 
 
-            response = requests.get(url)
+            try:
+                response = requests.get(url)
 
-            if response.status_code == 200:
-                with open('buuf.jpg', 'wb') as f:
-                    f.write(response.content)
-                print("Фото успешно скачано")
-            else:
-                print("Не удалось скачать фото")
+                if response.status_code == 200:
+                    with open('buuf.jpg', 'wb') as f:
+                        f.write(response.content)
+                    print("Фото успешно скачано")
+                else:
+                    print("Не удалось скачать фото")
 
 
-            # Создаем метку
-            image_label = QLabel()
+                # Создаем метку
+                image_label = QLabel()
 
-            # Загружаем картинку из файла
-            pixmap = QPixmap("buuf.jpg")
+                # Загружаем картинку из файла
+                pixmap = QPixmap("buuf.jpg")
 
-            # Устанавливаем картинку в метку
-            image_label.setPixmap(pixmap)
+                # Устанавливаем картинку в метку
+                image_label.setPixmap(pixmap)
 
-            v_box.addWidget(image_label)
+                v_box.addWidget(image_label)
+            except:
+                lablel = QLabel('Не удалось скачать фото')
+                v_box.addWidget(lablel)
 
 
         self.insertLayout(0, v_box)
