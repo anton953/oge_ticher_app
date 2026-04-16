@@ -25,6 +25,9 @@ class TaskVBox(QVBoxLayout):
         # Все задания
         task = self.task_manager.get_random(self.task_id)
 
+        self.answer = task['answer']
+        print('true answer:', self.answer)
+
 
         v_box = QVBoxLayout()
 
@@ -100,20 +103,44 @@ class TaskVBox(QVBoxLayout):
 
         self.line_edit.returnPressed.connect(lambda: self.handle_enter())
 
-        btn = QPushButton("Следущее задание")
-        h_box.addWidget(btn)
-        btn.clicked.connect(lambda: (self.remove_sub_layout(), self.get_task_lay()))
+        self.btn_next = QPushButton('Следущее задание')
+        h_box.addWidget(self.btn_next)
+        self.btn_next.clicked.connect(self.btn_conn)
+
+        self.square = QWidget()
+        self.square.setFixedSize(25, 25) # Задаем размер, чтобы получился квадрат
+        self.square.setStyleSheet("background-color: red; border: 2px solid black;")
+        h_box.addWidget(self.square)
         
 
 
 
         self.addLayout(h_box)
 
+    def btn_conn(self):
+        self.remove_sub_layout()
+        self.get_task_lay()
+        self.square.setStyleSheet("background-color: grey;")
+        # self.btn.setEnabled(True)  # Включить обратно[]
+
+
 
     def handle_enter(self):
         text = self.line_edit.text()
         print(f"Вы ввели: {text}")
         self.line_edit.clear()  # Очистить поле после ввода
+
+        if self.answer == text.strip():
+            print('good answer')
+
+            # self.btn.setEnabled(False) # Отключить[]
+            self.square.setStyleSheet("background-color: green;")
+
+        else:
+            print('wrong answer')
+            self.square.setStyleSheet("background-color: red;")
+
+
 
 
 

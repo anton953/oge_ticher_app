@@ -6,6 +6,8 @@ from PySide6.QtCore import Qt
 # from ui.main_tab.list_menu import ListMenu
 
 from ui.left_tab.task_vbox import TaskVBox
+from ui.left_tab.learning_vbox import LearningVBox
+
 
 
 class TabChoose(QTabWidget):
@@ -17,6 +19,7 @@ class TabChoose(QTabWidget):
         self.TabPosition(QTabWidget.West)
 
         # Создаем вкладки
+
         for i in range(1, 11):
             self.addTab(self.create_task_tab(i), f'{i}')
             
@@ -25,7 +28,10 @@ class TabChoose(QTabWidget):
 
     def create_task_tab(self, task_id):
         widget = QWidget()
-        main_layout = TaskVBox(widget, task_id)
+        if self.type_task == 'learning':
+            main_layout = LearningVBox(widget, task_id)
+        elif self.type_task == 'trening':
+            main_layout = TaskVBox(widget, task_id)
 
 
 
