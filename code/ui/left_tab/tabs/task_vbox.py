@@ -18,15 +18,18 @@ class TaskVBox(QVBoxLayout):
 
         self.task_manager = TaskManager()
 
+
         self.get_task_lay()
         self.get_line()
+
+        
         
     def get_task_lay(self):
         # Все задания
         task = self.task_manager.get_random(self.task_id)
 
         self.answer = task['answer']
-        print('true answer:', self.answer)
+        print(task['id'], 'true answer:', self.answer)
 
 
         v_box = QVBoxLayout()
@@ -38,7 +41,9 @@ class TaskVBox(QVBoxLayout):
         condition = task['condition']
         condition_widget = QLabel(condition)
         condition_widget.setFixedWidth(1000)
+        condition_widget.setFixedHeight(200)
         condition_widget.setWordWrap(True) # Текст будет переноситься, увеличивая высоту метки
+
         v_box.addWidget(condition_widget)
 
 
@@ -49,14 +54,6 @@ class TaskVBox(QVBoxLayout):
             ur = condition[(b + 1):e]
 
             url = 'https://kpolyakov.spb.ru/cms/images/' + ur
-
-
-
-            # await event_source.answer_photo(
-            #     photo=url,
-            #     # caption=clean_caption
-            # )
-
 
             try:
                 response = requests.get(url)
@@ -86,13 +83,6 @@ class TaskVBox(QVBoxLayout):
 
         self.insertLayout(0, v_box)
 
-        # try:
-        #     self.insertLayout(0, v_box)
-        #     print('insert')
-        # except:
-        #     self.addLayout(v_box)
-        #     print('add')
-
 
     def get_line(self):
         h_box = QHBoxLayout()
@@ -109,7 +99,7 @@ class TaskVBox(QVBoxLayout):
 
         self.square = QWidget()
         self.square.setFixedSize(25, 25) # Задаем размер, чтобы получился квадрат
-        self.square.setStyleSheet("background-color: red; border: 2px solid black;")
+        self.square.setStyleSheet("background-color: grey;")
         h_box.addWidget(self.square)
         
 
@@ -118,6 +108,8 @@ class TaskVBox(QVBoxLayout):
         self.addLayout(h_box)
 
     def btn_conn(self):
+        self.line_edit.clear()  # Очистить поле после ввода
+
         self.remove_sub_layout()
         self.get_task_lay()
         self.square.setStyleSheet("background-color: grey;")
@@ -128,7 +120,7 @@ class TaskVBox(QVBoxLayout):
     def handle_enter(self):
         text = self.line_edit.text()
         print(f"Вы ввели: {text}")
-        self.line_edit.clear()  # Очистить поле после ввода
+        # self.line_edit.clear()  # Очистить поле после ввода
 
         if self.answer == text.strip():
             print('good answer')
