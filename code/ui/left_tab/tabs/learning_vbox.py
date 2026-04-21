@@ -6,7 +6,7 @@ from PySide6.QtGui import QPixmap
 
 # from ui.left_tab.tab_choose import TabChoose
 
-from help.task_manager import TaskManager
+from helps.task_manager import TaskManager
 
 import requests
 

@@ -6,7 +6,7 @@ from PySide6.QtGui import QPixmap
 
 # from ui.left_tab.tab_choose import TabChoose
 
-from help.task_manager import TaskManager
+from helps.task_manager import TaskManager
 
 import requests
 
@@ -23,8 +23,9 @@ class VariantVBox(QVBoxLayout):
         
 
         self.lines = {}
+        self.timer = None
 
-
+        
         self.start_screen()
 
     def cr_all(self):
@@ -35,6 +36,7 @@ class VariantVBox(QVBoxLayout):
 
 
     def start_screen(self):
+        self.clear(self)
         btn = QPushButton('начать решать вариант')
         btn.clicked.connect(self.cr_all)
         self.addWidget(btn)
@@ -47,14 +49,21 @@ class VariantVBox(QVBoxLayout):
     def cr_timer(self):
         self.cnt = 0
         self.time_label = QLabel('Время 0')
-        # self.time_label.show()
         self.addWidget(self.time_label)
-        # Создаем таймер
-        timer = QTimer(self)
-        # Подключаем функцию к сигналу timeout
-        timer.timeout.connect(self.update_label)
+
+        if not self.timer:
+            # Создаем таймер
+            self.timer = QTimer(self)
+            # Подключаем функцию к сигналу timeout
+            self.timer.timeout.connect(self.update_label)
+            print('-------------')
+            
+
         # Запускаем с интервалом 1000 мс (1 секунда)
-        timer.start(1000)
+        self.timer.start(1000)
+        print('start#########################', self.timer)
+
+        
 
 
 
@@ -62,6 +71,7 @@ class VariantVBox(QVBoxLayout):
         btn = QPushButton('завершить вариант')
         btn.clicked.connect(self.end_var)
         self.addWidget(btn)
+
 
 
     def cr_var(self):
@@ -164,9 +174,11 @@ class VariantVBox(QVBoxLayout):
     def end_var(self):
         self.clear(self)
         pprint(self.answers, indent=4)
-        self.addWidget(QLabel(f'{self.answers}'))
+        self.addWidget(QLabel(f'{self.answers}\nСекунды: {self.cnt % 60}\nМтнуты: {self.cnt // 60}'))
         btn = QPushButton('закончить')
-        btn.clicked.connect(self.start_screen())
+        self.timer.stop()
+        # self.clear(self)
+        btn.clicked.connect(self.start_screen)
         self.addWidget(btn)
 
 

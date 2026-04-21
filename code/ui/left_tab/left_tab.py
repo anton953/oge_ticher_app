@@ -4,6 +4,9 @@ from PySide6.QtCore import Qt
 
 from ui.left_tab.tab_choose import TabChoose
 from ui.left_tab.tabs.variant_vbox import VariantVBox
+# from ui.left_tab.tabs.stats_vbox import TabStats
+from ui.left_tab.tabs.stats_vbox_upp import TabStats
+
 
 
 class LeftTab(QTabWidget):
@@ -22,6 +25,7 @@ class LeftTab(QTabWidget):
         self.addTab(self.create_learning_tab(), "Обучение")
         self.addTab(self.create_trening_tab(), "Тренеровка")
         self.addTab(self.create_variant_tab(), "Вариант")
+        self.addTab(self.create_stats_tab(), "Статистика")
         # self.addTab(self.create_about_tab(), "")
 
 
@@ -42,24 +46,20 @@ class LeftTab(QTabWidget):
         widget = QWidget()
         main_layout = QVBoxLayout(widget)
 
-
-
-
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-
 
         container = QWidget()
         container_layout = VariantVBox(container)
 
-
-        
-        
-
-
         scroll.setWidget(container)
         main_layout.addWidget(scroll)
 
+        return widget
+
+
+    def create_stats_tab(self):
+        widget = TabStats()
         return widget
 
     

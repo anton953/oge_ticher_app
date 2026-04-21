@@ -6,7 +6,9 @@ from PySide6.QtGui import QPixmap
 
 # from ui.left_tab.tab_choose import TabChoose
 
-from help.task_manager import TaskManager
+from helps.task_manager import TaskManager
+
+from helps.stats_module import StatsManager
 
 import requests
 
@@ -17,6 +19,8 @@ class TaskVBox(QVBoxLayout):
         self.task_id = task_id
 
         self.task_manager = TaskManager()
+
+        self.sm = StatsManager()
 
 
         self.get_task_lay()
@@ -128,9 +132,13 @@ class TaskVBox(QVBoxLayout):
             # self.btn.setEnabled(False) # Отключить[]
             self.square.setStyleSheet("background-color: green;")
 
+            self.sm.add_attempt(self.task_id, True, 10)
+
         else:
             print('wrong answer')
             self.square.setStyleSheet("background-color: red;")
+
+            self.sm.add_attempt(self.task_id, False, 10)
 
 
 
