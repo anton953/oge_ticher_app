@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import *
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPixmap
 
 
@@ -8,27 +8,80 @@ from PySide6.QtGui import QPixmap
 
 from helps.task_manager import TaskManager
 
-from helps.stats_module import StatsManager
+from helps.stats_module_upp import StatsManagerr
 
 import requests
+from ui.left_tab.tabs.stats_widget import TaskStatsWidget
 
 class TaskVBox(QVBoxLayout):
     def __init__(self, parent, task_id):
         super().__init__(parent)
 
         self.task_id = task_id
+        self.flag = True
 
         self.task_manager = TaskManager()
 
-        self.sm = StatsManager()
+        self.sm = StatsManagerr()
+
+        self.timer = None
+        self.start_screen()
 
 
+    def start_screen(self):
+        if self.timer:
+            self.timer.stop()
+        self.clear(self)
+
+        stats_widget = TaskStatsWidget(self.task_id)
+        self.addWidget(stats_widget)
+
+
+        btn = QPushButton('начать решать вариант')
+        btn.clicked.connect(self.cr_all)
+        self.addWidget(btn)
+
+
+
+    def cr_all(self):
+        self.clear(self)
         self.get_task_lay()
         self.get_line()
+        self.add_end_btn()
 
+    def add_end_btn(self):
+        btn = QPushButton('закончить сессию')
+        btn.clicked.connect(self.start_screen)
+        self.addWidget(btn)
+
+
+    def update_label(self):
+            self.cnt += 1
+            self.time_label.setText(f"Секунды: {self.cnt % 60}\nМтнуты: {self.cnt // 60}")
+
+
+    def cr_timer(self, per):
+        
+            self.cnt = 0
+            self.time_label = QLabel('Время 0')
+            per.addWidget(self.time_label)
+
+            if not self.timer:
+                # Создаем таймер
+                self.timer = QTimer(self)
+                # Подключаем функцию к сигналу timeout
+                self.timer.timeout.connect(self.update_label)
+                # print('-------------')
+                
+
+            # Запускаем с интервалом 1000 мс (1 секунда)
+            self.timer.start(1000)
+            # print('start#########################', self.timer)
         
         
     def get_task_lay(self):
+        self.flag = True
+        # self.cr_timer()
         # Все задания
         task = self.task_manager.get_random(self.task_id)
 
@@ -105,14 +158,17 @@ class TaskVBox(QVBoxLayout):
         self.square.setFixedSize(25, 25) # Задаем размер, чтобы получился квадрат
         self.square.setStyleSheet("background-color: grey;")
         h_box.addWidget(self.square)
-        
 
+
+        
+        self.cr_timer(h_box)
 
 
         self.addLayout(h_box)
 
     def btn_conn(self):
         self.line_edit.clear()  # Очистить поле после ввода
+        self.cnt = 0
 
         self.remove_sub_layout()
         self.get_task_lay()
@@ -123,22 +179,24 @@ class TaskVBox(QVBoxLayout):
 
     def handle_enter(self):
         text = self.line_edit.text()
-        print(f"Вы ввели: {text}")
+        # print(f"Вы ввели: {text}")
         # self.line_edit.clear()  # Очистить поле после ввода
 
-        if self.answer == text.strip():
-            print('good answer')
+        if self.flag:
+            if self.answer == text.strip():
+                print('good answer')
 
-            # self.btn.setEnabled(False) # Отключить[]
-            self.square.setStyleSheet("background-color: green;")
+                # self.btn.setEnabled(False) # Отключить[]
+                self.square.setStyleSheet("background-color: green;")
 
-            self.sm.add_attempt(self.task_id, True, 10)
+                self.sm.add_attempt(self.task_id, True, self.cnt)
+                self.flag = False
 
-        else:
-            print('wrong answer')
-            self.square.setStyleSheet("background-color: red;")
+            else:
+                print('wrong answer')
+                self.square.setStyleSheet("background-color: red;")
 
-            self.sm.add_attempt(self.task_id, False, 10)
+                self.sm.add_attempt(self.task_id, False, self.cnt)
 
 
 
@@ -168,5 +226,18 @@ class TaskVBox(QVBoxLayout):
                 sub_layout.deleteLater()
 
         
+    def clear(self, layout):
+        if layout is None:
+            return
 
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            
+            if widget:
+                # Если это виджет — удаляем его
+                widget.deleteLater()
+            elif item.layout():
+                # Если это вложенный макет — вызываем эту же функцию для него
+                self.clear(item.layout())
         

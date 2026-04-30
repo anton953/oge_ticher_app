@@ -1,13 +1,15 @@
 import json
 import os
 import time
+from datetime import datetime  # Импортируем именно класс из модуля
 
 class StatsManager:
-    def __init__(self, filename='user_stats.json'):
+    def __init__(self, filename='user_stats2.json'):
         self.filename = filename
         # Веса заданий: 1-12 (базовые) = 1, 13-15 (сложные) = 2
         self.weights = {str(i): (2 if i >= 13 else 1) for i in range(1, 16)}
         self.stats = self._load_data()
+        self.stats.setdefault("activity", {})
 
     def _load_data(self):
         if os.path.exists(self.filename):
@@ -51,6 +53,11 @@ class StatsManager:
                 s["history"].pop(0)
             
             self._save_data()
+
+        date_key = datetime.now().strftime("%Y-%m-%d")
+        activity = self.stats.get("activity", {})
+        activity[date_key] = activity.get(date_key, 0) + 1
+        self.stats["activity"] = activity
 
     def get_dashboard_data(self):
         """Возвращает комплексную статистику для интерфейса."""
