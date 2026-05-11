@@ -2,8 +2,8 @@
     "tasks": {
         "1": {
             "correct": 61,
-            "total": 74,
-            "avg_time": 6.87
+            "total": 75,
+            "avg_time": 6.82
         },
         "5": {
             "correct": 13,
@@ -17,13 +17,13 @@
         },
         "8": {
             "correct": 1,
-            "total": 1,
-            "avg_time": 10.0
+            "total": 2,
+            "avg_time": 14.0
         },
         "3": {
             "correct": 2,
-            "total": 2,
-            "avg_time": 10.0
+            "total": 3,
+            "avg_time": 9.33
         },
         "7": {
             "correct": 1,
@@ -32,8 +32,23 @@
         },
         "2": {
             "correct": 0,
-            "total": 9,
-            "avg_time": 3.56
+            "total": 10,
+            "avg_time": 3.8
+        },
+        "16": {
+            "correct": 0,
+            "total": 2,
+            "avg_time": 17.5
+        },
+        "10": {
+            "correct": 0,
+            "total": 1,
+            "avg_time": 14.0
+        },
+        "9": {
+            "correct": 0,
+            "total": 2,
+            "avg_time": 15.5
         }
     },
     "history": []

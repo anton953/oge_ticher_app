@@ -3,23 +3,11 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPixmap
 
-
-# from ui.left_tab.tab_choose import TabChoose
-
-from helps.task_manager import TaskManager
-
 import requests
+from helps.task_manager import TaskManager
 from helps.ide import PythonEditorWidget
-
-
-
-from helps.task_manager import TaskManager
-
 from helps.stats_module_upp import StatsManagerr
-
-import requests
 from ui.left_tab.tabs.stats_widget import TaskStatsWidget
-
 
 
 class TaskCodingHBox(QVBoxLayout):
@@ -74,7 +62,7 @@ class TaskCodingHBox(QVBoxLayout):
 
     def update_label(self):
         self.cnt += 1
-        self.time_label.setText(f"Секунды: {self.cnt % 60}\nМтнуты: {self.cnt // 60}")
+        self.time_label.setText(f"Секунды: {self.cnt % 60}\nМинуты: {self.cnt // 60}")
 
 
     def cr_timer(self, per):
@@ -87,16 +75,13 @@ class TaskCodingHBox(QVBoxLayout):
             self.timer = QTimer(self)
             # Подключаем функцию к сигналу timeout
             self.timer.timeout.connect(self.update_label)
-            # print('-------------')
         
         # Запускаем с интервалом 1000 мс (1 секунда)
         self.timer.start(1000)
-        # print('start#########################', self.timer)
-    
+
         
     def get_task_lay(self):
         self.flag = True
-        # self.cr_timer()
         # Все задания
         task = self.task_manager.get_random(self.task_id)
 
@@ -135,7 +120,7 @@ class TaskCodingHBox(QVBoxLayout):
                         f.write(response.content)
                     print("Фото успешно скачано")
                 else:
-                    print("Не удалось скачать фото")
+                    print("��е удалось скачать фото")
 
                 # Создаем метку
                 image_label = QLabel()
@@ -148,8 +133,8 @@ class TaskCodingHBox(QVBoxLayout):
 
                 v_box.addWidget(image_label)
             except:
-                lablel = QLabel('Не удалось скачать фото')
-                v_box.addWidget(lablel)
+                label = QLabel('Не удалось скачать фото')
+                v_box.addWidget(label)
 
         return v_box
 
@@ -157,18 +142,18 @@ class TaskCodingHBox(QVBoxLayout):
     def get_buttons(self):
         h_box = QHBoxLayout()
 
-        self.btn_check = QPushButton('Проверить')
-        h_box.addWidget(self.btn_check)
-        self.btn_check.clicked.connect(self.con_btn_check)
+        # self.btn_check = QPushButton('Проверить')
+        # h_box.addWidget(self.btn_check)
+        # self.btn_check.clicked.connect(self.con_btn_check)
 
-        self.btn_next = QPushButton('Следущее задание')
+        self.btn_next = QPushButton('Следующее задание')
         h_box.addWidget(self.btn_next)
         self.btn_next.clicked.connect(self.con_btn_next)
 
-        self.square = QWidget()
-        self.square.setFixedSize(25, 25) # Задаем размер, чтобы получился квадрат
-        self.square.setStyleSheet("background-color: grey;")
-        h_box.addWidget(self.square)
+        # self.square = QWidget()
+        # self.square.setFixedSize(25, 25) # Задаем размер, чтобы получился квадрат
+        # self.square.setStyleSheet("background-color: grey;")
+        # h_box.addWidget(self.square)
 
         self.cr_timer(h_box)
 
@@ -179,22 +164,17 @@ class TaskCodingHBox(QVBoxLayout):
         self.cnt = 0
 
         self.remove_sub_layout()
-        self.get_task_lay()
-        self.square.setStyleSheet("background-color: grey;")
-        # self.btn.setEnabled(True)  # Включить обратно[]
-
+        self.cr_all()
+        # self.square.setStyleSheet("background-color: grey;")
 
 
     def con_btn_check(self):
         text = self.ide.output()
-        # print(f"Вы ввели: {text}")
-        # self.line_edit.clear()  # Очистить поле после ввода
 
         if self.flag:
             if self.answer == text.strip():
                 print('good answer')
 
-                # self.btn.setEnabled(False) # Отключить[]
                 self.square.setStyleSheet("background-color: green;")
 
                 self.sm.add_attempt(self.task_id, True, self.cnt)
@@ -207,12 +187,6 @@ class TaskCodingHBox(QVBoxLayout):
                 self.sm.add_attempt(self.task_id, False, self.cnt)
 
 
-
-
-
-
-
-    
     def remove_sub_layout(self, index_to_remove=0):
         # 1. Извлекаем элемент из родителя по индексу
         item = self.takeAt(index_to_remove)
@@ -228,7 +202,7 @@ class TaskCodingHBox(QVBoxLayout):
                         child.widget().deleteLater()
                     elif child.layout():
                         # Рекурсивно чистим, если там есть еще вложенности
-                        remove_sub_layout(sub_layout, 0)
+                        self.clear(child.layout())
                 
                 # 3. Удаляем сам объект лейаута из памяти
                 sub_layout.deleteLater()
@@ -248,6 +222,3 @@ class TaskCodingHBox(QVBoxLayout):
             elif item.layout():
                 # Если это вложенный макет — вызываем эту же функцию для него
                 self.clear(item.layout())
-        
-
-

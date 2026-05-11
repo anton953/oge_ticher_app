@@ -16,6 +16,9 @@ from ui.left_tab.tabs.variant_vbox import VariantVBox
 
 from ui.left_tab.tabs.task.coding_task import TaskCodingHBox
 
+from ui.left_tab.tabs.learning.learning_coding_16 import LearningCoding16
+
+
 
 
 class TabChoose(QTabWidget):
@@ -32,7 +35,7 @@ class TabChoose(QTabWidget):
             for i in range(1, 11):
                 self.addTab(self.create_learning_tab(i), f'{i}')
 
-            # self.addTab(self.cr_learnin_codig())
+            self.addTab(self.cr_learnin_codig(), '16')
 
         
         elif self.type_task == 'trening':
@@ -52,7 +55,9 @@ class TabChoose(QTabWidget):
         return widget
 
     def cr_learnin_codig(self):
-        return
+        widget = QWidget()
+        main_layout = LearningCoding16(widget)
+        return widget
 
 
     def create_task_tab(self, task_id):

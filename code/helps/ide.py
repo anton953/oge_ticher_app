@@ -64,6 +64,10 @@ class PythonEditorWidget(QWidget):
         layout.addWidget(self.splitter)
         layout.addWidget(self.run_btn)
 
+        # Задаем начальное распределение места (например, 500px под код и 150px под консоль)
+        # Числа могут быть любыми — сплиттер распределит их пропорционально
+        self.splitter.setSizes([500, 150])
+
     def setup_editor(self):
         # 4 пробела вместо Tab
         font = QFont("Consolas", 12)
