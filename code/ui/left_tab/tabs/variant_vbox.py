@@ -19,7 +19,7 @@ class VariantVBox(QVBoxLayout):
         print('cr')
 
         self.true_answers = {}
-        self.answers = {i: False for i in range(1, 11)}
+        self.answers = {i: {'answer': '', 'time': 0, 'check': False} for i in range(1, 11)}
         
 
         self.lines = {}
@@ -161,12 +161,16 @@ class VariantVBox(QVBoxLayout):
         # self.line_edit.clear()  # Очистить поле после ввода
 
         if self.true_answers[task_id] == text.strip():
-            self.answers[task_id] = True
+            self.answers[task_id]['answer'] = text
+            self.answers[task_id]['check'] = True
+            self.answers[task_id]['time'] = self.cnt
             print('good answer')
 
 
         else:
-            self.answers[task_id] = False
+            self.answers[task_id]['answer'] = text
+            self.answers[task_id]['check'] = True
+            self.answers[task_id]['time'] = self.cnt
             print('wrong answer')
 
 
@@ -174,7 +178,11 @@ class VariantVBox(QVBoxLayout):
     def end_var(self):
         self.clear(self)
         pprint(self.answers, indent=4)
-        self.addWidget(QLabel(f'{self.answers}\nСекунды: {self.cnt % 60}\nМтнуты: {self.cnt // 60}'))
+        s = f'{self.answers}'
+        s += f'{self.true_answers}'
+        s += f'\nСекунды: {self.cnt % 60}'
+        s += f'\nМтнуты: {self.cnt // 60}'
+        self.addWidget(QLabel(s))
         btn = QPushButton('закончить')
         self.timer.stop()
         # self.clear(self)

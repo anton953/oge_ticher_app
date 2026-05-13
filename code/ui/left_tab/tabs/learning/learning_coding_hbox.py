@@ -10,7 +10,6 @@ from helps.task_manager import TaskManager
 
 import requests
 
-# TODO make learning coding
 
 class LearningCodingHBox(QHBoxLayout):
     def __init__(self, parent):
