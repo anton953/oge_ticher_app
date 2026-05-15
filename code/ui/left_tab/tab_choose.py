@@ -12,7 +12,7 @@ from ui.left_tab.tabs.learning.learning_vbox import LearningVBox
 # from ui.left_tab.tabs.learning.learning_coding import PythonEditorWidget 
 
 
-from ui.left_tab.tabs.variant_vbox import VariantVBox
+from ui.left_tab.tabs.variant.variant_vbox import VariantVBox
 
 from ui.left_tab.tabs.task.coding_task import TaskCodingHBox
 

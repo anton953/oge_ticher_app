@@ -3,7 +3,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
 
 from ui.left_tab.tab_choose import TabChoose
-from ui.left_tab.tabs.variant_vbox import VariantVBox
+from ui.left_tab.tabs.variant.variant_vbox import VariantVBox
 # from ui.left_tab.tabs.stats_vbox import TabStats
 # from ui.left_tab.tabs.stats_vbox3 import UltraDashboard as TabStats
 from ui.left_tab.tabs.stats_widget import GeneralStatsWidget as TabStats
