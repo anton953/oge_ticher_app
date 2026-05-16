@@ -7,32 +7,31 @@ from PySide6.QtGui import QPainter, QColor
 from PySide6.QtWidgets import QSizePolicy # Не забудь добавить в импорт
 
 class TimeStatsWidget(QWidget):
-    def __init__(self, data_dict):
-        """
-        :param data_dict: Словарь вида {1: {'time': 45, 'is_correct': True}, ...}
-        """
+    def __init__(self, data_dict, typee):
         super().__init__()
-        self.data = data_dict
+        self.data = data_dict # :param data_dict: Словарь вида {1: {'time': 45, 'is_correct': True}, ...}
+        self.type = typee
         self.layout = QVBoxLayout(self)
         self.setup_ui()
+
 
     def setup_ui(self):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # Заголовок
-        header = QLabel("Время выполнения заданий")
+        header = QLabel("Время выполнения заданий" if self.type == 'one' else'Среднее время выполнения заданий')
         header.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 10px;")
         self.layout.addWidget(header)
 
         # Создаем график
         self.chart = QChart()
-        self.chart.setTitle("Зеленый — верно, Красный — ошибка")
+        # self.chart.setTitle("Зеленый — верно, Красный — ошибка")
         self.chart.setAnimationOptions(QChart.SeriesAnimations)
 
         # Создаем два набора данных для разных цветов
-        set_correct = QBarSet("Верно")
+        set_correct = QBarSet("Верно" if self.type == 'one' else'Преобладание правельных ответов')
         set_correct.setColor(QColor("#2ecc71")) # Зеленый
         
-        set_incorrect = QBarSet("Неверно")
+        set_incorrect = QBarSet("Неверно" if self.type == 'one' else'Преобладание неправельных ответов')
         set_incorrect.setColor(QColor("#e74c3c")) # Красный
 
         categories = []

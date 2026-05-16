@@ -28,12 +28,11 @@ class VariantVBox(QVBoxLayout):
         self.true_answers = {}
         self.answers = {i: {'answer': '', 'time': 0, 'is_correct': False} for i in range(1, 11)}
         
-
         self.lines = {}
         self.timer = None
 
-        
         self.start_screen()
+
 
     def cr_all(self):
         self.clear(self)
@@ -48,15 +47,14 @@ class VariantVBox(QVBoxLayout):
 
         with open("variant_time_avg.json", "r", encoding="utf-8") as file:
             data = json.load(file)
-            print(data)
 
-        chart_widget = TimeStatsWidget(data)
+        chart_widget = TimeStatsWidget(data, 'all')
         self.addWidget(chart_widget)
-
 
         btn = QPushButton('начать решать вариант')
         btn.clicked.connect(self.cr_all)
         self.addWidget(btn)
+
 
     def update_label(self):
         self.cnt += 1
@@ -73,22 +71,18 @@ class VariantVBox(QVBoxLayout):
             self.timer = QTimer(self)
             # Подключаем функцию к сигналу timeout
             self.timer.timeout.connect(self.update_label)
-            print('-------------')
+            # print('not timer')
             
 
         # Запускаем с интервалом 1000 мс (1 секунда)
         self.timer.start(1000)
-        print('start#########################', self.timer)
-
-        
-
+        # print('start#########################', self.timer)
 
 
     def cr_btn_end(self):
         btn = QPushButton('завершить вариант')
         btn.clicked.connect(self.end_var)
         self.addWidget(btn)
-
 
 
     def cr_var(self):
@@ -101,7 +95,6 @@ class VariantVBox(QVBoxLayout):
 
         self.true_answers[task_id] = task['answer']
         print(task['id'], 'true answer:', self.true_answers[task_id])
-
 
         v_box = QVBoxLayout()
 
@@ -116,7 +109,6 @@ class VariantVBox(QVBoxLayout):
 
         condition_widget.setWordWrap(True) # Текст будет переноситься, увеличивая высоту метки
         v_box.addWidget(condition_widget)
-
 
         if '<img src=' in condition:
             b = condition.find('\"')
@@ -151,8 +143,6 @@ class VariantVBox(QVBoxLayout):
                 lablel = QLabel('Не удалось скачать фото')
                 v_box.addWidget(lablel)
 
-
-
         h_box = QHBoxLayout()
 
         self.lines[task_id] = QLineEdit()
@@ -161,15 +151,8 @@ class VariantVBox(QVBoxLayout):
 
         self.lines[task_id].returnPressed.connect(lambda: self.handle_enter(task_id))
 
-        
-
-
         v_box.addLayout(h_box)
         self.addLayout(v_box)
-        print('add')
-
-
-
     
 
     def handle_enter(self, task_id):
@@ -182,42 +165,60 @@ class VariantVBox(QVBoxLayout):
             self.answers[task_id]['is_correct'] = True
             self.answers[task_id]['time'] = self.cnt
             print('good answer')
-
-
         else:
             self.answers[task_id]['answer'] = text
             self.answers[task_id]['is_correct'] = False
             self.answers[task_id]['time'] = self.cnt
             print('wrong answer')
 
+
     def upstats(self):
-        # Чтение из файла в словарь
         with open("variant_time_avg.json", "r", encoding="utf-8") as file:
-            data = json.load(file)
-            # print(file_data)
+            data_time = json.load(file)
+
+        with open("variant_stats_avg.json", "r", encoding="utf-8") as file:
+            data_stats = json.load(file)
 
         for key in self.answers.keys():
-            data[f'stats_{key}'] = data['cnt'] + 1 if self.answers[key]['is_correct'] else data['cnt']
-            data[key] = {
-            'time': str((int(data[str(key)]['time']) + self.answers[key]['time']) // data['cnt']),
-            'is_correct': True if data[f'stats_{key}'] > data['cnt'] else False,
+            if self.answers[key]['is_correct']:
+                data_stats[f'stats_{key}'] = data_stats['cnt'] + 1  
+            else:
+                data_stats[f'stats_{key}'] = data_stats['cnt']
+
+            ans_time = (self.answers[key]['time'] - self.answers[key - 1]['time'] if key != 1 else self.answers[key]['time'])
+
+            data_time[key] = {
+            'time': (int(data_time[str(key)]['time']) + ans_time) // data_stats['cnt'],
+            'is_correct': True if data_stats[f'stats_{key}'] > data_stats['cnt'] else False,
             }
-        data['cnt'] += 1
-
-
-
-        # data = {
-        #     key: {
-        #     'time': str(self.answers[key]['time']),
-        #     'is_correct': self.answers[key]['is_correct'],
-        #     }
-        #     for key in self.answers.keys()
-        #     }
-        # data['cnt'] = 1
-
 
         with open("variant_time_avg.json", "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=4)
+            json.dump(data_time, file, ensure_ascii=False, indent=4)
+
+        with open("variant_stats_avg.json", "w", encoding="utf-8") as file:
+            json.dump(data_stats, file, ensure_ascii=False, indent=4)
+
+
+    def cr_stats(self):
+        data_time = {
+            key: {
+            'time': self.answers[key]['time'],
+            'is_correct': self.answers[key]['is_correct'],
+            }
+            for key in self.answers.keys()
+            }
+
+        data_stats = {
+            f'stats_{key}': 0
+            for key in self.answers.keys()
+            }
+        data_stats['cnt'] = 1
+
+        with open("variant_time_avg.json", "w", encoding="utf-8") as file:
+            json.dump(data_time, file, ensure_ascii=False, indent=4)
+
+        with open("variant_stats_avg.json", "w", encoding="utf-8") as file:
+            json.dump(data_stats, file, ensure_ascii=False, indent=4)
 
 
     def end_var(self):
@@ -225,14 +226,13 @@ class VariantVBox(QVBoxLayout):
         # pprint(self.answers, indent=4)
 
         self.upstats()
+        # self.cr_stats()
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True) # Важно: позволяет содержимому адаптироваться
 
         container = QWidget()
         layout = QVBoxLayout(container)
-
-
 
         s = f'{self.answers}'
         s += f'\n{self.true_answers}'
@@ -252,7 +252,7 @@ class VariantVBox(QVBoxLayout):
             for key in self.answers.keys()
             }
 
-        chart_widget = TimeStatsWidget(ans)
+        chart_widget = TimeStatsWidget(ans, 'one')
         layout.addWidget(chart_widget)
 
         btn = QPushButton('закончить')
@@ -266,8 +266,6 @@ class VariantVBox(QVBoxLayout):
 
         # 5. Устанавливаем QScrollArea как главный виджет окна
         self.addWidget(scroll_area)
-
-
 
 
     def clear(self, layout):
@@ -284,8 +282,3 @@ class VariantVBox(QVBoxLayout):
             elif item.layout():
                 # Если это вложенный макет — вызываем эту же функцию для него
                 self.clear(item.layout())
-
-
-
-    
-  
