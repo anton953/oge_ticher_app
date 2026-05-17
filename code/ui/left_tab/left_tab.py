@@ -87,12 +87,31 @@ class LeftTab(QTabWidget):
         return widget
 
 
+    # def create_variant_tab(self):
+    #     widget = QWidget()
+    #     main_layout = QVBoxLayout(widget)
+
+    #     scroll = QScrollArea()
+    #     scroll.setWidgetResizable(True)
+
+    #     container = QWidget()
+    #     container_layout = VariantVBox(container)
+
+    #     scroll.setWidget(container)
+    #     main_layout.addWidget(scroll)
+
+    #     return widget
+
     def create_variant_tab(self):
         widget = QWidget()
         main_layout = QVBoxLayout(widget)
+        main_layout.setContentsMargins(0, 0, 0, 0)
 
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
+        
+        # ВОТ ЭТА СТРОКА КРИТИЧЕСКИ ВАЖНА ДЛЯ НОВОГО СТИЛЯ:
+        scroll.setObjectName("variantScrollArea") 
 
         container = QWidget()
         container_layout = VariantVBox(container)

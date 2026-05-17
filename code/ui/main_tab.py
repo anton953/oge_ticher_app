@@ -5,14 +5,16 @@ from PySide6.QtCore import Qt
 from ui.left_tab.left_tab import LeftTab
 # from ui.main_tab.list_menu import ListMenu
 
+from ui.settings import SettingsVBox
+
 
 class MainTab(QTabWidget):
-    def __init__(self):
+    def __init__(self, tm):
         super().__init__()
 
         # Создаем вкладки
         self.addTab(self.create_home_tab(), "Главная")
-        self.addTab(self.create_settings_tab(), "Настройки")
+        self.addTab(self.create_settings_tab(tm), "Настройки")
         self.addTab(self.create_about_tab(), "О программе")
 
 
@@ -28,10 +30,11 @@ class MainTab(QTabWidget):
         # layout.addWidget(QPushButton("Начать работу"))
         # return widget
     
-    def create_settings_tab(self):
+    def create_settings_tab(self, tm):
         widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Настройки приложения"))
+        layout = SettingsVBox(widget, tm)
+        
+        # layout.addWidget(QLabel("Настройки приложения"))
         return widget
     
     def create_about_tab(self):

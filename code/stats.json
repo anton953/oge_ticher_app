@@ -1,9 +1,9 @@
 {
     "tasks": {
         "1": {
-            "correct": 62,
-            "total": 76,
-            "avg_time": 6.95
+            "correct": 63,
+            "total": 77,
+            "avg_time": 7.13
         },
         "5": {
             "correct": 13,
@@ -37,8 +37,8 @@
         },
         "16": {
             "correct": 0,
-            "total": 2,
-            "avg_time": 17.5
+            "total": 0,
+            "avg_time": 0
         },
         "10": {
             "correct": 0,

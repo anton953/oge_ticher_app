@@ -25,11 +25,11 @@ class GeneralStatsWidget(QWidget):
 
         # Создаем график (Bar Chart)
         self.chart = QChart()
-        self.chart.setTitle("Успешность по номерам заданий")
+        # self.chart.setTitle("Успешность по номерам заданий")
         self.chart.setAnimationOptions(QChart.SeriesAnimations)
 
         # Данные для графика
-        bar_set = QBarSet("Процент успеха")
+        bar_set = QBarSet("Успешность по номерам заданий")
         categories = []
         
         # Берем данные из нашего StatsManager

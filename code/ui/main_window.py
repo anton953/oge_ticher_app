@@ -6,10 +6,10 @@ from ui.main_tab import MainTab
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, tm):
         super().__init__()
         self.setWindowTitle("ОГЭ Информатика")
         self.resize(1000, 600)
 
-        tabs = MainTab()
+        tabs = MainTab(tm)
         self.setCentralWidget(tabs)

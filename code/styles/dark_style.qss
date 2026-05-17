@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Главное окно и панели
+   ========================================================================== */
+QMainWindow {
+    background-color: #1a1a1e;
+}
+
+/* Стили контента для всех QTabWidget в приложении */
+QTabWidget::pane {
+    border: 1px solid #2d2d35;
+    background-color: #222228;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   Верхние (корневые) вкладки (main_tab.py)
+   ========================================================================== */
+QTabBar::tab {
+    background-color: #1a1a1e;
+    color: #a0a0a8;
+    padding: 10px 20px;
+    margin-right: 4px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-size: 14px;
+}
+
+QTabBar::tab:hover {
+    background-color: #26262b;
+    color: #ffffff;
+}
+
+QTabBar::tab:selected {
+    background-color: #222228;
+    color: #00adb5; /* Бирюзовый акцент */
+    border-bottom: 3px solid #00adb5;
+}
+
+/* ==========================================================================
+   Кнопки и интерактивные элементы
+   ========================================================================== */
+
+QPushButton {
+    /* Явно отключаем нативный стиль операционной системы */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #00adb5;
+    
+    /* Задаем фон и цвет текста */
+    background-color: #00adb5; 
+    color: #ffffff;
+    
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #00c2cb;
+    border-color: #00c2cb;
+}
+
+QPushButton:pressed {
+    background-color: #008a90;
+    border-color: #008a90;
+}
+
+
+/* Все текстовые метки в темной теме будут светло-серыми/белыми */
+QLabel {
+    color: #e1e1e6;
+}
+
+
+
+/* Стилизуем область скролла */
+QScrollArea {
+    border: none; /* Убираем уродливую стандартную рамку */
+    background-color: transparent;
+}
+
+/* Обязательно перекрашиваем внутреннее окно скролла */
+QScrollArea QWidget {
+    background-color: #222228; /* Цвет фона, как у панели вкладок */
+}
+
+/* Красивый тонкий скроллбар */
+QScrollBar:vertical {
+    border: none;
+    background: #1a1a1e;
+    width: 8px;
+    margin: 0px;
+}
+
+/* Ползунок скролла */
+QScrollBar::handle:vertical {
+    background: #3e3e4a;
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #00adb5; /* Подсветка бирюзовым при наведении */
+}
+
+/* Убираем стрелочки сверху и снизу скроллбара */
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* ==========================================================================
+   Поле ввода текста (QLineEdit) — Темная тема
+   ========================================================================== */
+QLineEdit {
+    background-color: #2a2a32; /* Чуть светлее основного фона, чтобы выделялось */
+    color: #ffffff;            /* Белый текст при вводе */
+    border: 1px solid #3e3e4a; /* Неброская серая рамка */
+    border-radius: 6px;        /* Скругление углов */
+    padding: 6px 12px;         /* Внутренние отступы, чтобы текст не прилипал к краям */
+    font-size: 14px;
+    selection-background-color: #00adb5; /* Цвет выделения текста внутри поля */
+}
+
+/* Когда пользователь кликнул на поле ввода (Фокус) */
+QLineEdit:focus {
+    border: 1px solid #00adb5; /* Рамка становится бирюзовой */
+    background-color: #2d2d37; /* Фон становится каплю светлее */
+}
+
+/* Стиль подсказки (placeholder), пока в поле ничего не введено */
+QLineEdit[text=""] {
+    color: #75757f;
+}

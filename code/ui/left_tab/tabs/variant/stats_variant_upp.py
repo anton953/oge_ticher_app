@@ -37,9 +37,12 @@ class TimeStatsWidget(QWidget):
         categories = []
         
         # Сортируем ключи (номера заданий), чтобы график шел по порядку
-        sorted_tasks = sorted(self.data.keys())
 
-        for task_id in sorted_tasks:
+        sorted_tasks = sorted([int(i) for i in self.data.keys()])
+
+        for key in sorted_tasks:
+            task_id = str(key)
+
             task_info = self.data[task_id]
             if type(task_info) == dict:
                 time_val = task_info['time']

@@ -45,13 +45,23 @@ class VariantVBox(QVBoxLayout):
     def start_screen(self):
         self.clear(self)
 
-        with open("variant_time_avg.json", "r", encoding="utf-8") as file:
-            data = json.load(file)
+        try:
+            with open("variant_time_avg3.json", "r", encoding="utf-8") as file:
+                data = json.load(file)
 
-        chart_widget = TimeStatsWidget(data, 'all')
-        self.addWidget(chart_widget)
+            # data = {'1': {'time': 1234, 'is_correct': True}, '2': {'time': 0, 'is_correct': False}, '3': {'time': 0, 'is_correct': False}, '4': {'time': 0, 'is_correct': False}, '5': {'time': 0, 'is_correct': False}, '6': {'time': 0, 'is_correct': False}, '7': {'time': 0, 'is_correct': False}, '8': {'time': 0, 'is_correct': False}, '9': {'time': 0, 'is_correct': False}, '10': {'time': 0, 'is_correct': False}}
+
+
+            chart_widget = TimeStatsWidget(data, 'all')
+            self.addWidget(chart_widget)
+            print(data)
+        except:
+            print('не удалось загрузить виджет статистики')
 
         btn = QPushButton('начать решать вариант')
+        btn.setAutoFillBackground(True)
+        btn.style().unpolish(btn)
+        btn.style().polish(btn)
         btn.clicked.connect(self.cr_all)
         self.addWidget(btn)
 
@@ -81,6 +91,7 @@ class VariantVBox(QVBoxLayout):
 
     def cr_btn_end(self):
         btn = QPushButton('завершить вариант')
+        btn.setAutoFillBackground(True)
         btn.clicked.connect(self.end_var)
         self.addWidget(btn)
 
@@ -201,7 +212,7 @@ class VariantVBox(QVBoxLayout):
 
     def cr_stats(self):
         data_time = {
-            key: {
+            int(key): {
             'time': self.answers[key]['time'],
             'is_correct': self.answers[key]['is_correct'],
             }
@@ -245,7 +256,7 @@ class VariantVBox(QVBoxLayout):
         layout.addWidget(ResultsWidget(ans))
 
         ans = {
-            key: {
+            str(key): {
                 'is_correct': self.answers[key]['is_correct'],
                 'time': (self.answers[key]['time'] - self.answers[key - 1]['time'] if key != 1 else self.answers[key]['time'])
                 }
@@ -256,6 +267,7 @@ class VariantVBox(QVBoxLayout):
         layout.addWidget(chart_widget)
 
         btn = QPushButton('закончить')
+        btn.setAutoFillBackground(True)
         self.timer.stop()
         # self.clear(self)
         btn.clicked.connect(self.start_screen)
