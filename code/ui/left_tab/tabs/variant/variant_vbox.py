@@ -46,7 +46,7 @@ class VariantVBox(QVBoxLayout):
         self.clear(self)
 
         try:
-            with open("variant_time_avg3.json", "r", encoding="utf-8") as file:
+            with open("variant_time_avg.json", "r", encoding="utf-8") as file:
                 data = json.load(file)
 
             # data = {'1': {'time': 1234, 'is_correct': True}, '2': {'time': 0, 'is_correct': False}, '3': {'time': 0, 'is_correct': False}, '4': {'time': 0, 'is_correct': False}, '5': {'time': 0, 'is_correct': False}, '6': {'time': 0, 'is_correct': False}, '7': {'time': 0, 'is_correct': False}, '8': {'time': 0, 'is_correct': False}, '9': {'time': 0, 'is_correct': False}, '10': {'time': 0, 'is_correct': False}}

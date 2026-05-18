@@ -6,6 +6,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QPainter, QColor
 from PySide6.QtWidgets import QSizePolicy # Не забудь добавить в импорт
 
+# 1. НЕ ЗАБУДЬ ДОБАВИТЬ В ИМПОРТЫ НАВЕРХУ ФАЙЛА QStackedBarSeries:
+from PySide6.QtCharts import QChart, QChartView, QBarSet, QStackedBarSeries, QBarCategoryAxis, QValueAxis
+
 class TimeStatsWidget(QWidget):
     def __init__(self, data_dict, typee):
         super().__init__()
@@ -61,7 +64,7 @@ class TimeStatsWidget(QWidget):
 
         # Группируем наборы в одну серию
         # Используем QBarSeries для обычных столбиков
-        series = QBarSeries()
+        series = QStackedBarSeries()
         series.append(set_correct)
         series.append(set_incorrect)
         # Убираем расстояние между столбиками одного задания, чтобы они казались одним

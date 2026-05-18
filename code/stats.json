@@ -1,9 +1,9 @@
 {
     "tasks": {
         "1": {
-            "correct": 63,
-            "total": 77,
-            "avg_time": 7.13
+            "correct": 66,
+            "total": 80,
+            "avg_time": 7.36
         },
         "5": {
             "correct": 13,
@@ -11,44 +11,45 @@
             "avg_time": 6.82
         },
         "6": {
-            "correct": 1,
-            "total": 2,
+            "correct": 6,
+            "total": 10,
             "avg_time": 10.0
         },
         "8": {
-            "correct": 1,
-            "total": 2,
+            "correct": 4,
+            "total": 9,
             "avg_time": 14.0
         },
         "3": {
-            "correct": 2,
-            "total": 3,
+            "correct": 12,
+            "total": 23,
             "avg_time": 9.33
         },
         "7": {
-            "correct": 1,
-            "total": 3,
+            "correct": 5,
+            "total": 11,
             "avg_time": 10.0
         },
         "2": {
-            "correct": 0,
-            "total": 10,
-            "avg_time": 3.8
+            "correct": 8,
+            "total": 11,
+            "avg_time": 5.27
         },
-        "16": {
-            "correct": 0,
-            "total": 0,
-            "avg_time": 0
-        },
+       
         "10": {
-            "correct": 0,
-            "total": 1,
-            "avg_time": 14.0
+            "correct": 6,
+            "total": 8,
+            "avg_time": 5.25
         },
         "9": {
-            "correct": 0,
-            "total": 2,
+            "correct": 5,
+            "total": 8,
             "avg_time": 15.5
+        },
+        "4": {
+            "correct": 6,
+            "total": 13,
+            "avg_time": 9.0
         }
     },
     "history": []
