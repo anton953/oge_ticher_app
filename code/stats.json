@@ -2,8 +2,8 @@
     "tasks": {
         "1": {
             "correct": 66,
-            "total": 80,
-            "avg_time": 7.36
+            "total": 84,
+            "avg_time": 7.15
         },
         "5": {
             "correct": 13,
@@ -35,7 +35,6 @@
             "total": 11,
             "avg_time": 5.27
         },
-       
         "10": {
             "correct": 6,
             "total": 8,

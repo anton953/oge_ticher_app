@@ -198,7 +198,7 @@ class VariantVBox(QVBoxLayout):
 
             ans_time = (self.answers[key]['time'] - self.answers[key - 1]['time'] if key != 1 else self.answers[key]['time'])
 
-            data_time[key] = {
+            data_time[str(key)] = {
             'time': (int(data_time[str(key)]['time']) + ans_time) // data_stats['cnt'],
             'is_correct': True if data_stats[f'stats_{key}'] > data_stats['cnt'] else False,
             }

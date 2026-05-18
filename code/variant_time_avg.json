@@ -1,42 +1,42 @@
 {
     "1": {
-        "time": 4,
-        "is_correct": true
+        "time": 2,
+        "is_correct": false
     },
     "2": {
-        "time": 6,
-        "is_correct": true
+        "time": 1,
+        "is_correct": false
     },
     "3": {
-        "time": 4,
-        "is_correct": true
+        "time": 2,
+        "is_correct": false
     },
     "4": {
-        "time": 8,
+        "time": 2,
         "is_correct": false
     },
     "5": {
-        "time": 7,
-        "is_correct": true
+        "time": 2,
+        "is_correct": false
     },
     "6": {
-        "time": 5,
+        "time": 3,
         "is_correct": false
     },
     "7": {
-        "time": 4,
+        "time": 3,
         "is_correct": false
     },
     "8": {
-        "time": 9,
-        "is_correct": true
+        "time": 1,
+        "is_correct": false
     },
     "9": {
-        "time": 3,
-        "is_correct": true
+        "time": 2,
+        "is_correct": false
     },
     "10": {
-        "time": 8,
-        "is_correct": true
+        "time": 2,
+        "is_correct": false
     }
 }
